@@ -1,6 +1,7 @@
 ---
 name: notion-md-writer
 description: "Writes content intended for Notion upload. Always creates a .md file first before any MCP tool call. Use when drafting articles, notes, or documents destined for Notion."
+---
 ***
 
 ## 역할
