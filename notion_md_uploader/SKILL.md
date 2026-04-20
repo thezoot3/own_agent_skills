@@ -24,7 +24,7 @@ Notion API (Notion-Version: 2026-03-11 기준)를 통해
 ### STEP 1 — 업로드 대상 확인
 
 업로드 전 반드시 확인:
-1. `.md` 파일 경로 또는 내용을 받는다.
+1. `.md` 파일의 **절대 경로**를 받는다. 파일을 직접 읽지 않는다 — PreToolUse 훅이 자동으로 내용을 주입한다.
 2. 업로드할 Notion 위치를 파악한다:
     - **신규 페이지**: 부모 페이지 ID 또는 데이터베이스 ID 필요
     - **기존 페이지 교체**: 대상 페이지 ID 필요
@@ -56,7 +56,7 @@ Notion MCP 툴: `API-post-page`
 ```json
 {
   "parent": { "page_id": "PARENT_PAGE_ID" },
-  "markdown": "<.md 파일 전체 내용을 문자열로>"
+  "markdown": "/absolute/path/to/file.md"
 }
 ```
 
@@ -161,7 +161,7 @@ Notion MCP 툴: `API-patch-page-markdown` 또는 직접 API 호출
 ## 토큰 절감 수칙
 
 - `children` 파라미터(JSON 블록 방식)는 **사용하지 않는다** — 동일 내용 대비 3~7배 토큰 소비
-- `markdown` 파라미터 한 번 호출로 페이지 전체를 생성한다
+- `markdown` 파라미터에 **파일 절대 경로**를 전달한다 — PreToolUse 훅(`inject_md.sh`)이 파일을 읽어 내용으로 교체하므로 Claude context에 파일 내용이 진입하지 않는다
 - 검증 시 `GET /markdown` 엔드포인트를 사용해 JSON 블록 API 대신 마크다운으로 받는다
 - 업데이트는 `replace_content` 또는 `update_content`를 사용하고 블록 단위 append는 피한다
 
